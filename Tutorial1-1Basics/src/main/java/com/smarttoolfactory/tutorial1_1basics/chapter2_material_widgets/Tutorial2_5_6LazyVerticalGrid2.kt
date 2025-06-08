@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +37,8 @@ import com.smarttoolfactory.tutorial1_1basics.R
 import com.smarttoolfactory.tutorial1_1basics.model.Snack
 import com.smarttoolfactory.tutorial1_1basics.model.snacks
 import com.smarttoolfactory.tutorial1_1basics.ui.backgroundColor
+
+import coil.compose.AsyncImage
 
 /**
  * In this tutorial Snack card has a title below that can either be one or 2 lines
@@ -83,23 +86,18 @@ fun GridSnackCardWithTitle(
 
         val density = LocalDensity.current.density
 
-        Image(
+        AsyncImage(
+            model = snack.imageUrl,
+            contentDescription = null,
             contentScale = ContentScale.None,
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .clip(RoundedCornerShape(8.dp))
                 .clickable { },
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current).data(data = snack.imageUrl)
-                    .apply(block = fun ImageRequest.Builder.() {
-                        placeholder(drawableResId = R.drawable.placeholder)
-                    }
-                    ).build()
-            ),
-            contentDescription = null
+            placeholder = painterResource(R.drawable.placeholder),
+            error = painterResource(R.drawable.placeholder),
         )
-
         var padding by remember { mutableStateOf(0.dp) }
         Text(
             modifier = Modifier.padding(start = 6.dp, end = 6.dp, top = 4.dp, bottom=padding),

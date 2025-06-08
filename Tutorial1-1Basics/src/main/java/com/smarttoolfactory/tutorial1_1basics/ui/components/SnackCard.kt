@@ -19,11 +19,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.smarttoolfactory.tutorial1_1basics.R
@@ -51,18 +53,14 @@ fun SnackCard(
         Box(contentAlignment = Alignment.TopEnd) {
 
             Column(modifier = Modifier.fillMaxSize()) {
-
-                Image(
+                // Replace Image with AsyncImage
+                AsyncImage(
+                    model = snack.imageUrl,
+                    contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = modifier,
-                    painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current).data(data = snack.imageUrl)
-                            .apply(block = fun ImageRequest.Builder.() {
-                                crossfade(true)
-                                placeholder(drawableResId = R.drawable.placeholder)
-                            }).build()
-                    ),
-                    contentDescription = null
+                    placeholder = painterResource(R.drawable.placeholder),
+                    error = painterResource(R.drawable.placeholder),
                 )
 
                 Column(modifier = Modifier.padding(8.dp)) {
@@ -103,20 +101,17 @@ fun HorizontalSnackCard(
     Box(contentAlignment = Alignment.TopEnd) {
 
         Column {
-
-            Image(
+            // Replace Image with AsyncImage
+            AsyncImage(
+                model = snack.imageUrl,
+                contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = modifier
                     .size(160.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .clickable { },
-                painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current).data(data = snack.imageUrl)
-                        .apply(block = fun ImageRequest.Builder.() {
-                            placeholder(drawableResId = R.drawable.placeholder)
-                        }).build()
-                ),
-                contentDescription = null
+                placeholder = painterResource(R.drawable.placeholder),
+                error = painterResource(R.drawable.placeholder),
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -137,28 +132,23 @@ fun HorizontalSnackCard(
     }
 }
 
-
 @Composable
 fun GridSnackCard(
     modifier: Modifier = Modifier,
     snack: Snack,
 ) {
     Box(contentAlignment = Alignment.TopEnd, modifier = modifier.padding(4.dp)) {
-
-
-        Image(
+        // Replace Image with AsyncImage
+        AsyncImage(
+            model = snack.imageUrl,
+            contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = modifier
                 .size(120.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .clickable { },
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current).data(data = snack.imageUrl)
-                    .apply(block = fun ImageRequest.Builder.() {
-                        placeholder(drawableResId = R.drawable.placeholder)
-                    }).build()
-            ),
-            contentDescription = null
+            placeholder = painterResource(R.drawable.placeholder),
+            error = painterResource(R.drawable.placeholder),
         )
     }
 }
